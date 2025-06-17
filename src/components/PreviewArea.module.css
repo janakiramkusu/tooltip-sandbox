@@ -1,0 +1,74 @@
+.previewContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  width: 90%;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 2px dashed #e2e8f0;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.tooltipHolder {
+  position: absolute;
+  cursor: move;
+  user-select: none;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.previewButton {
+  padding: 12px 20px;
+  border: none;
+  background: #3b82f6;
+  color: white;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.previewButton:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .previewContainer {
+    width: 95%;
+    padding: 16px;
+  }
+
+  .previewButton {
+    font-size: 15px;
+    padding: 10px 18px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .previewContainer {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+  }
+
+  .previewButton {
+    font-size: 14px;
+    padding: 8px 16px;
+    width: 100%;
+    max-width: 250px;
+  }
+
+  .tooltipHolder {
+    transform: scale(0.95); /* slightly reduce size if needed */
+  }
+}

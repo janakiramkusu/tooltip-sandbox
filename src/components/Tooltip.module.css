@@ -1,0 +1,174 @@
+/* === Wrapper === */
+.wrapper {
+  position: relative;
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+}
+
+/* === Base Tooltip === */
+.tooltip {
+  position: absolute;
+  z-index: 1000;
+  padding: 10px 14px;
+  opacity: 0.95;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  pointer-events: auto;
+  word-wrap: break-word;
+  max-width: 250px;
+  background-color: var(--bgColor, #1e293b); /* default if not set */
+  color: #fff;
+  background-clip: padding-box;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* === Positioning === */
+.top {
+  bottom: 120%;
+  left: 10%;
+  transform: translateX(-50%);
+}
+.bottom {
+  top: 120%;
+  left: 10%;
+  transform: translateX(-50%);
+}
+.left {
+  top: 10%;
+  right: 120%;
+  transform: translateY(-50%);
+}
+.right {
+  top: 10%;
+  left: 120%;
+  transform: translateY(-50%);
+}
+
+/* === Tooltip Shapes === */
+.rectangle {
+  border-radius: 4px;
+}
+.rounded {
+  border-radius: 12px;
+}
+.speech-bubble {
+  border-radius: 12px;
+  position: absolute;
+}
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+/* === Speech Bubble Arrows === */
+.speech-bubble.top::after {
+  bottom: -10px;
+  left: 10px;
+  border-width: 10px 10px 0 10px;
+  border-color: var(--bgColor) transparent transparent transparent;
+}
+.speech-bubble.bottom::after {
+  top: -10px;
+  left: 10px;
+  border-width: 0 10px 10px 10px;
+  border-color: transparent transparent var(--bgColor) transparent;
+}
+.speech-bubble.left::after {
+  right: -10px;
+  top: 35%;
+  transform: translateY(-50%);
+  border-width: 10px 0 10px 10px;
+  border-color: transparent transparent transparent var(--bgColor);
+}
+.speech-bubble.right::after {
+  left: -10px;
+  top: 35%;
+  transform: translateY(-50%);
+  border-width: 10px 10px 10px 0;
+  border-color: transparent var(--bgColor) transparent transparent;
+}
+
+/* === Responsive Handling === */
+@media (max-width: 768px) {
+  .tooltip {
+    font-size: 13px;
+    padding: 8px 12px;
+    max-width: 200px;
+  }
+
+  .speech-bubble::after {
+    border-width: 8px !important; /* scale down arrow on small devices */
+  }
+
+  .top {
+    bottom: 110%;
+  }
+  .bottom {
+    top: 110%;
+  }
+  .left {
+    right: 110%;
+  }
+  .right {
+    left: 110%;
+  }
+}
+
+@media (max-width: 480px) {
+  .tooltip {
+    max-width: 160px;
+    font-size: 12px;
+    padding: 6px 10px;
+    word-break: break-word;
+  }
+}
+/* === Animations === */
+
+/* Fade Animation */
+.fade {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Zoom Animation */
+.zoom {
+  animation: zoomIn 0.3s ease-out forwards;
+}
+@keyframes zoomIn {
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Slide Animation */
+.slide {
+  animation: slideIn 0.3s ease-out forwards;
+}
+@keyframes slideIn {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
