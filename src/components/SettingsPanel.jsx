@@ -120,17 +120,36 @@ const SettingsPanel = ({ config, setConfig }) => {
           <>
             <h4 className={styles.sectionTitle}>Typography</h4>
             <label>
-              Font Family
-              <select
-                value={config.fontFamily}
-                onChange={e => update('fontFamily', e.target.value)}
-              >
-                <option value="Inter, sans-serif">Inter</option>
-                <option value="Roboto, sans-serif">Roboto</option>
-                <option value="Georgia, serif">Georgia</option>
-                <option value="Courier New, monospace">Courier New</option>
-              </select>
-            </label>
+  Font Family
+  <select
+    value={config.fontFamily}
+    onChange={e => update('fontFamily', e.target.value)}
+  >
+    <option value="Inter, sans-serif">Inter</option>
+    <option value="Roboto, sans-serif">Roboto</option>
+    <option value="Georgia, serif">Georgia</option>
+    <option value="'Courier New', monospace">Courier New</option>
+    <option value="'Open Sans', sans-serif">Open Sans</option>
+    <option value="Montserrat, sans-serif">Montserrat</option>
+    <option value="'Lobster', cursive">Lobster</option>
+    <option value="'Playfair Display', serif">Playfair Display</option>
+    <option value="Raleway, sans-serif">Raleway</option>
+    <option value="'Pacifico', cursive">Pacifico</option>
+    <option value="'Fira Sans', sans-serif">Fira Sans</option>
+    <option value="Ubuntu, sans-serif">Ubuntu</option>
+    <option value="Merriweather, serif">Merriweather</option>
+    <option value="'Josefin Sans', sans-serif">Josefin Sans</option>
+    <option value="Rubik, sans-serif">Rubik</option>
+    <option value="Quicksand, sans-serif">Quicksand</option>
+    <option value="'PT Sans', sans-serif">PT Sans</option>
+    <option value="'DM Sans', sans-serif">DM Sans</option>
+    <option value="Oswald, sans-serif">Oswald</option>
+    <option value="'Bebas Neue', cursive">Bebas Neue</option>
+    <option value="'Dancing Script', cursive">Dancing Script</option>
+    <option value="'Shadows Into Light', cursive">Shadows Into Light</option>
+  </select>
+</label>
+
 
             <h4 className={styles.sectionTitle}>Effects</h4>
             <label>
