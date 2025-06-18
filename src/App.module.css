@@ -2,33 +2,32 @@
 .app {
   display: flex;
   flex-direction: row;
-  height: calc(100vh - 51px);
-  padding-top: 54px;
+  height: 100vh;
   background-color: #f9fafb;
   font-family: 'Inter', sans-serif;
   color: #111827;
   overflow: hidden;
-  position: fixed;
   width: 100%;
   top: 0;
   left: 0;
+  padding-top: 54px;
 }
 
 /* === Sidebar === */
 .sidebar {
   width: 280px;
+  min-width: 240px;
   background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
-  border : 3px solid #e5e7eb;
+  border: 3px solid #e5e7eb;
   padding: 16px 20px;
   overflow-y: auto;
   scroll-behavior: smooth;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   backdrop-filter: blur(10px) saturate(160%);
-  -webkit-backdrop-filter: blur(10px) saturate(160%);;
-  height: 95%;
-  align-self: flex-end;
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+  height: calc(100vh - 54px);
+  flex-shrink: 0;
 }
-
 
 /* === Sidebar Header === */
 .sidebarHeader {
@@ -49,31 +48,29 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 32px 24px;
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
+  justify-content: flex-start;
+  padding: 32px;
+  overflow-y: auto;
+  max-width: calc(100% - 620px);
+  margin: 0 auto;
 }
 
+/* === Preview Box (Now Relative) === */
 .preview {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
   background-color: #ffffff;
   padding: 32px 24px;
   width: 100%;
-  max-width: 600px;
+  max-width: 700px;
   border-radius: 16px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin: auto;
 }
 
+/* === Heading === */
 .heading {
   font-size: 24px;
   font-weight: 600;
@@ -84,14 +81,15 @@
 /* === Code Panel === */
 .codePanel {
   width: 340px;
+  min-width: 280px;
   background: #ffffff;
-  border : 3px solid #e5e7eb;
+  border: 3px solid #e5e7eb;
   padding: 16px 20px;
   overflow-y: auto;
   font-family: 'Fira Code', monospace;
   box-shadow: inset 1px 0 0 #e5e7eb;
-  height: 95%;
-  align-self: flex-end;
+  height: calc(100vh - 54px);
+  flex-shrink: 0;
 }
 
 /* === Header === */
@@ -106,7 +104,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  height: 50px;
+  height: 54px;
   z-index: 100;
   padding: 0 16px;
 }
@@ -131,18 +129,31 @@
 }
 
 /* === Responsive Fixes === */
+@media (max-width: 1280px) {
+  .mainContent {
+    max-width: 100%;
+    padding: 24px;
+  }
+
+  .preview {
+    max-width: 90%;
+  }
+
+  .codePanel {
+    width: 300px;
+  }
+}
+
 @media (max-width: 1024px) {
   .app {
     flex-direction: column;
     height: auto;
-    position: relative;
   }
 
   .sidebar,
   .codePanel {
     width: 100%;
     height: auto;
-    border-radius: 0;
     padding: 16px;
     box-shadow: none;
   }
@@ -156,6 +167,7 @@
     transform: none;
     box-shadow: none;
     padding: 24px 16px;
+    max-width: 100%;
   }
 
   .heading,
