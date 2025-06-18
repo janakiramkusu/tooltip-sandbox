@@ -69,4 +69,4 @@ Includes:
 git clone https://github.com/janakiramkusu/tooltip-sandbox.git
 cd tooltip-sandbox
 npm install
-npm run dev
+npm start
