@@ -46,7 +46,7 @@ const [config, setConfig] = useState({
 
   {/* RIGHT: Code Panel */}
   <div className={`${styles.codePanel} ${styles.hideScrollbar}`}>
-    <h1 className={styles.sidebarHeader}>Code Generator</h1>
+    <h2 className={styles.sidebarHeader}>Code Generator</h2>
     <CodePanel config={config} />
   </div>
 </div>
