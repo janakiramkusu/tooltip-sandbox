@@ -24,7 +24,8 @@ const SettingsPanel = ({ config, setConfig }) => {
   );
 
   return (
-    <div className={styles.panel}>
+    <div
+  className={`${styles.panel} ${activeTab === 'advanced' ? styles.advancedMode : ''}`}>
       <div className={styles.tabs}>
         {['general', 'style', 'advanced'].map(tab => (
           <button
@@ -156,7 +157,7 @@ const SettingsPanel = ({ config, setConfig }) => {
               Border Radius (px)
               <input
                 type="number"
-                value={config.borderRadius || 8}
+                value={config.borderRadius || 0}
                 onChange={e => update('borderRadius', parseInt(e.target.value))}
               />
             </label>

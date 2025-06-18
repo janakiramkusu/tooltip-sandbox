@@ -47,7 +47,7 @@
 
 /* === Tooltip Shapes === */
 .rectangle {
-  border-radius: 4px;
+  border-radius: 0px;
 }
 .rounded {
   border-radius: 12px;
@@ -66,27 +66,27 @@
 
 /* === Speech Bubble Arrows === */
 .speech-bubble.top::after {
-  bottom: -10px;
+  bottom: -9px;
   left: 10px;
   border-width: 10px 10px 0 10px;
   border-color: var(--bgColor) transparent transparent transparent;
 }
 .speech-bubble.bottom::after {
-  top: -10px;
+  top: -9px;
   left: 10px;
   border-width: 0 10px 10px 10px;
   border-color: transparent transparent var(--bgColor) transparent;
 }
 .speech-bubble.left::after {
   right: -10px;
-  top: 35%;
+  top: 45%;
   transform: translateY(-50%);
   border-width: 10px 0 10px 10px;
   border-color: transparent transparent transparent var(--bgColor);
 }
 .speech-bubble.right::after {
   left: -10px;
-  top: 35%;
+  top: 45%;
   transform: translateY(-50%);
   border-width: 10px 10px 10px 0;
   border-color: transparent var(--bgColor) transparent transparent;

@@ -1,3 +1,4 @@
+// src/components/CodePanel.jsx
 import React from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -5,96 +6,220 @@ import styles from './CodePanel.module.css';
 
 const CodePanel = ({ config }) => {
   const {
-    text = 'Hello! I am a tooltip',
-    bgColor = '#333',
-    textColor = '#fff',
-    fontSize = '14px',
-    fontWeight = 'normal',
-    width = '150px',
-    borderColor = '#000',
-    boxShadow = '0px 4px 12px rgba(0,0,0,0.2)',
-    fontFamily = 'Arial, sans-serif',
-    borderRadius = 8,
+    text,
+    shape,
+    position,
+    animation,
+    bgColor,
+    textColor,
+    fontSize,
+    fontFamily,
+    fontWeight,
+    width,
+    borderRadius,
+    borderColor,
+    boxShadow,
+    shadowColor,
+    bgImage,
+    trigger,
   } = config;
 
-  const code = `
+  const borderRadiusValue =
+    shape === 'rounded' ? `${borderRadius || 12}px` :
+    shape === 'rectangle' ? '0px' :
+    `${borderRadius || 8}px`;
+
+  const shapeStyles = (() => {
+    if (shape === 'speech-bubble') {
+      const arrowColor = bgColor;
+      const arrowBase = `
+        .tooltip-box.speech-bubble::after {
+          content: '';
+          position: absolute;
+          width: 0;
+          height: 0;
+          border-style: solid;
+        }
+      `;
+      const positions = {
+        top: `
+          .tooltip-box.speech-bubble::after {
+            bottom: -10px;
+            left: 10px;
+            border-width: 10px 10px 0 10px;
+            border-color: ${arrowColor} transparent transparent transparent;
+          }
+        `,
+        bottom: `
+          .tooltip-box.speech-bubble::after {
+            top: -10px;
+            left: 10px;
+            border-width: 0 10px 10px 10px;
+            border-color: transparent transparent ${arrowColor} transparent;
+          }
+        `,
+        left: `
+          .tooltip-box.speech-bubble::after {
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 10px 0 10px 10px;
+            border-color: transparent transparent transparent ${arrowColor};
+          }
+        `,
+        right: `
+          .tooltip-box.speech-bubble::after {
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 10px 10px 10px 0;
+            border-color: transparent ${arrowColor} transparent transparent;
+          }
+        `,
+      };
+      return arrowBase + (positions[position] || '');
+    }
+    return '';
+  })();
+
+  const animationStyles = (() => {
+    switch (animation) {
+      case 'fade':
+        return `
+          .tooltip-box.fade {
+            transition: opacity 0.3s ease;
+            opacity: 0;
+          }
+          .tooltip-wrapper:hover .tooltip-box.fade,
+          .tooltip-wrapper:focus-within .tooltip-box.fade {
+            opacity: 1;
+          }
+        `;
+      case 'scale':
+        return `
+          .tooltip-box.scale {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            transform: scale(0.9);
+            opacity: 0;
+          }
+          .tooltip-wrapper:hover .tooltip-box.scale,
+          .tooltip-wrapper:focus-within .tooltip-box.scale {
+            transform: scale(1);
+            opacity: 1;
+          }
+        `;
+      case 'slide':
+        return `
+          .tooltip-box.slide {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            transform: translateY(10px);
+            opacity: 0;
+          }
+          .tooltip-wrapper:hover .tooltip-box.slide,
+          .tooltip-wrapper:focus-within .tooltip-box.slide {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        `;
+      default:
+        return '';
+    }
+  })();
+
+  const triggerAttr = trigger === 'focus' ? 'tabindex="0"' : '';
+
+  const fullHtmlCode = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tooltip Demo</title>
+  <title>Generated Tooltip</title>
   <style>
     body {
-      height: 100vh;
-      margin: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #f4f4f4;
       font-family: ${fontFamily};
+      margin: 0;
+      padding: 0;
+    }
+
+    .center-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
 
     .tooltip-wrapper {
       position: relative;
       display: inline-block;
-      cursor: pointer;
+      outline: none;
     }
 
-    .tooltip-button {
-      padding: 12px 24px;
-      font-size: 16px;
-      background-color: #444;
-      color: white;
+    .tooltip-wrapper button {
+      padding: 12px 20px;
       border: none;
-      border-radius: 6px;
+      background: #3b82f6;
+      color: white;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .tooltip-wrapper button:hover {
+      background: #2563eb;
+      transform: translateY(-1px);
     }
 
     .tooltip-box {
       position: absolute;
-      bottom: 120%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: ${bgColor};
-      color: ${textColor};
       padding: 10px 14px;
-      border-radius: ${borderRadius}px;
-      font-size: ${fontSize};
-      font-weight: ${fontWeight};
-      width: ${width};
-      border: 1px solid ${borderColor};
-      box-shadow: ${boxShadow};
-      white-space: normal;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease, transform 0.3s ease;
       z-index: 1000;
+      pointer-events: none;
+      white-space: nowrap;
+      opacity: 0.95;
     }
 
-    .tooltip-wrapper:hover .tooltip-box {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateX(-50%) translateY(-4px);
-    }
+    .tooltip-box.top    { bottom: 100%; left: 50%; transform: translateX(-50%); margin-bottom: 8px; }
+    .tooltip-box.bottom { top: 100%; left: 50%; transform: translateX(-50%); margin-top: 8px; }
+    .tooltip-box.left   { right: 100%; top: 50%; transform: translateY(-50%); margin-right: 8px; }
+    .tooltip-box.right  { left: 100%; top: 50%; transform: translateY(-50%); margin-left: 8px; }
+
+    ${shapeStyles}
+    ${animationStyles}
   </style>
 </head>
 <body>
-
-  <div class="tooltip-wrapper">
-    <button class="tooltip-button" aria-describedby="tooltip1">Hover Me</button>
-    <div class="tooltip-box" id="tooltip1" role="tooltip">
-      ${text}
-    </div>
+  <div class="center-container">
+    <span class="tooltip-wrapper" ${triggerAttr}>
+      <button>${trigger.charAt(0).toUpperCase() + trigger.slice(1)} me</button>
+      <span class="tooltip-box ${shape} ${position} ${animation}" style="
+        background-color: ${bgColor};
+        color: ${textColor};
+        font-size: ${fontSize}px;
+        font-family: ${fontFamily};
+        font-weight: ${fontWeight};
+        width: ${width};
+        border-radius: ${borderRadiusValue};
+        border: 1px solid ${borderColor};
+        box-shadow: ${boxShadow ? `${boxShadow.split(' ').slice(0, -1).join(' ')} ${shadowColor}` : `0px 4px 8px ${shadowColor}`};
+        background-image: url('${bgImage}');
+        background-size: cover;
+        background-repeat: no-repeat;
+      ">
+        ${text}
+      </span>
+    </span>
   </div>
-
 </body>
 </html>
-`.trim();
+`;
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(code);
-      alert('✅ Full HTML code copied!');
+      await navigator.clipboard.writeText(fullHtmlCode);
+      alert('✅ Full HTML copied to clipboard!');
     } catch (err) {
       alert('❌ Failed to copy code.');
     }
@@ -102,14 +227,14 @@ const CodePanel = ({ config }) => {
 
   return (
     <div className={styles.codePanel}>
-      <div className={styles.codeBlock}>
-        <SyntaxHighlighter language="html" style={oneDark} wrapLongLines showLineNumbers>
-          {code}
-        </SyntaxHighlighter>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <button onClick={handleCopy} className={styles.copyButton}>
+          Copy Full HTML
+        </button>
       </div>
-      <button onClick={handleCopy} className={styles.copyButton}>
-        Copy Full HTML
-      </button>
+      <SyntaxHighlighter language="html" style={oneDark} wrapLongLines className={styles.codeBlock}>
+        {fullHtmlCode}
+      </SyntaxHighlighter>
     </div>
   );
 };

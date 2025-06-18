@@ -30,7 +30,7 @@
 .previewButton {
   padding: 12px 20px;
   border: none;
-  background: #3b82f6;
+  background: linear-gradient(90deg, #2563eb, #0460f4);
   color: white;
   border-radius: 8px;
   font-size: 16px;
@@ -40,7 +40,7 @@
 }
 
 .previewButton:hover {
-  background: #2563eb;
+  background: linear-gradient(90deg, #5b8cf4, #4685ea);
   transform: translateY(-1px);
 }
 

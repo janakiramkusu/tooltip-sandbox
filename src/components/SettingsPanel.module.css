@@ -6,8 +6,13 @@
   display: flex;
   flex-direction: column;
   background-color: #f9fafb;
+  padding: 16px;
+  transition: margin-bottom 0.3s ease;
 }
 
+.advancedMode {
+  margin-bottom: 400px;
+}
 /* === Tabs Navigation === */
 .tabs {
   display: flex;

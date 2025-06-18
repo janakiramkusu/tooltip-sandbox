@@ -31,20 +31,26 @@ const [config, setConfig] = useState({
   <h1 className={styles.title}>Tooltip Sandbox</h1>
 </header>
 
-    <div className={`${styles.app} ${styles.hideScrollbar}`}>
-      <div className={`${styles.sidebar} ${styles.hideScrollbar}`}>
-        <h2 className={styles.sidebarHeader}> Tooltip Customizer</h2>
-        <SettingsPanel config={config} setConfig={setConfig} />
-      </div>
-      <div className={styles.preview}>
-        <h2 className={styles.heading}>Live Preview</h2>
-        <PreviewArea config={config} />
-      </div>
-      <div className={`${styles.sidebar} ${styles.hideScrollbar}`}>
-        <h1 className={styles.sidebarHeader}> Generated Code</h1>
-        <CodePanel config={config} />
-      </div>
-    </div>
+<div className={styles.app}>
+  {/* LEFT: Customizer */}
+  <div className={`${styles.sidebar} ${styles.hideScrollbar}`}>
+    <h2 className={styles.sidebarHeader}> Tooltip Customizer</h2>
+    <SettingsPanel config={config} setConfig={setConfig} />
+  </div>
+
+  {/* CENTER: Preview */}
+  <div className={styles.mainContent}>
+    <h2 className={styles.heading}>Live Preview</h2>
+    <PreviewArea config={config} />
+  </div>
+
+  {/* RIGHT: Code Panel */}
+  <div className={`${styles.codePanel} ${styles.hideScrollbar}`}>
+    <h1 className={styles.sidebarHeader}>Generated Code</h1>
+    <CodePanel config={config} />
+  </div>
+</div>
+
     </>
   );
 };
